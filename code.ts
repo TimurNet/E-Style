@@ -13,8 +13,12 @@ async function getAllVariables() {
           resolvedType: resolvedVariable?.resolvedType || 'Undefined',
         };
       }));
-      console.log("Fetched variables:", enrichedVariables);
-      figma.ui.postMessage({ type: 'display-variables', data: enrichedVariables });
+
+      // Фильтрация переменных с типом String
+      const stringVariables = enrichedVariables.filter(variable => variable.resolvedType === 'STRING');
+
+      console.log("Fetched String variables:", stringVariables);
+      figma.ui.postMessage({ type: 'display-variables', data: stringVariables });
     } else {
       console.warn("No variables found in the draft.");
       figma.ui.postMessage({ type: 'display-variables', data: [] });
