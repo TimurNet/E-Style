@@ -1,0 +1,115 @@
+<head>
+    <title>List Variables</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 5px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        select {
+            margin-top: 10px;
+            padding: 5px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<h1>All Variables in Draft</h1>
+<ul id="variables-list"></ul>
+
+<label for="style-select">Select Font Family:</label>
+<select id="style-select">
+    <option value="">Select a Font Family</option>
+</select>
+
+<label for="variable-select">Select Variable:</label>
+<select id="variable-select">
+    <option value="">Select a Variable</option>
+</select>
+
+<button id="apply-variable-to-family">Apply</button>
+<button id="update-data">Update</button>
+
+<script>
+    const applyVariableToFamilyButton = document.getElementById('apply-variable-to-family');
+    const updateDataButton = document.getElementById('update-data');
+    const variablesList = document.getElementById('variables-list');
+    const styleSelect = document.getElementById('style-select');
+    const variableSelect = document.getElementById('variable-select');
+
+    let textStyles = [];
+    let variables = [];
+
+    // Автоматический запрос переменных и текстовых стилей при загрузке
+    window.onload = () => {
+        updateData();
+    };
+
+    applyVariableToFamilyButton.onclick = () => {
+        const selectedOption = styleSelect.options[styleSelect.selectedIndex];
+        const fontFamily = selectedOption.getAttribute('data-font-family');
+        const variableId = variableSelect.value;
+        if (!fontFamily || !variableId) {
+            alert('Please select a font family and a variable.');
+            return;
+        }
+        parent.postMessage({ pluginMessage: { type: 'apply-variable-to-font-family', fontFamily, field: 'fontFamily', variableId } }, '*');
+    };
+
+    updateDataButton.onclick = () => {
+        updateData();
+    };
+
+    function updateData() {
+        parent.postMessage({ pluginMessage: { type: 'get-variables' } }, '*');
+        parent.postMessage({ pluginMessage: { type: 'get-text-styles' } }, '*');
+    }
+
+    window.onmessage = (event) => {
+        const { type, data } = event.data.pluginMessage;
+        if (type === 'display-variables') {
+            variables = data;
+            variableSelect.innerHTML = '<option value="">Select a Variable</option>';
+            variables.forEach(variable => {
+                variableSelect.innerHTML += `<option value="${variable.id}">${variable.name}</option>`;
+            });
+        } else if (type === 'text-styles') {
+            textStyles = data;
+            styleSelect.innerHTML = '<option value="">Select a Font Family</option>';
+            textStyles.forEach(group => {
+                const fontFamilyOption = document.createElement('option');
+                fontFamilyOption.value = group.fontFamily;
+                fontFamilyOption.textContent = group.fontFamily;
+                fontFamilyOption.setAttribute('data-font-family', group.fontFamily);
+                styleSelect.appendChild(fontFamilyOption);
+            });
+        }
+    };
+</script>
+</body>

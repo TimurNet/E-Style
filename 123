@@ -1,0 +1,109 @@
+figma.showUI(__html__, { width: 400, height: 300 });
+
+// Функция для получения всех переменных в драфте и их отправки в UI
+async function getAllVariables() {
+  try {
+    const variables = await figma.variables.getLocalVariablesAsync();
+    if (variables && variables.length > 0) {
+      const enrichedVariables = await Promise.all(variables.map(async (variable) => {
+        const resolvedVariable = await figma.variables.getVariableByIdAsync(variable.id);
+        return {
+          id: variable.id,
+          name: resolvedVariable?.name || 'Unnamed',
+          resolvedType: resolvedVariable?.resolvedType || 'Undefined',
+        };
+      }));
+      console.log("Fetched variables:", enrichedVariables);
+      figma.ui.postMessage({ type: 'display-variables', data: enrichedVariables });
+    } else {
+      console.warn("No variables found in the draft.");
+      figma.ui.postMessage({ type: 'display-variables', data: [] });
+    }
+  } catch (error) {
+    console.error("Error fetching variables:", error);
+    figma.ui.postMessage({ type: 'display-variables', data: [] });
+  }
+}
+
+figma.ui.onmessage = (msg) => {
+  if (msg.type === 'get-variables') {
+    getAllVariables();
+  } else if (msg.type === 'close-plugin') {
+    figma.closePlugin();
+  }
+};
+
+// Отображение UI
+figma.showUI(__html__, { width: 400, height: 400 });
+
+// HTML (UI) для плагина
+const __html__ = `
+<!DOCTYPE html>
+<html>
+<head>
+  <title>List Variables</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 10px;
+    }
+    button {
+      margin-top: 10px;
+      padding: 5px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>All Variables in Draft</h1>
+  <button id="get-variables">Get Variables</button>
+  <ul id="variables-list"></ul>
+
+  <script>
+    const getVariablesButton = document.getElementById('get-variables');
+    const variablesList = document.getElementById('variables-list');
+
+    getVariablesButton.onclick = () => {
+      parent.postMessage({ pluginMessage: { type: 'get-variables' } }, '*');
+    };
+
+    window.onmessage = (event) => {
+      const { type, data } = event.data.pluginMessage;
+      if (type === 'display-variables') {
+        variablesList.innerHTML = '';
+        if (data.length === 0) {
+          variablesList.innerHTML = '<li>No variables found.</li>';
+        } else {
+          data.forEach(variable => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `ID: ${variable.id}, Name: ${variable.name}, Type: ${variable.resolvedType}`;
+            variablesList.appendChild(listItem);
+          });
+        }
+      }
+    };
+  </script>
+</body>
+</html>`;
