@@ -1,72 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>List Variables</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Variable Manager</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 20px;
+            background-color: #f4f5f7;
+            color: #333;
         }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
         h1 {
-            font-size: 18px;
+            font-size: 24px;
             margin-bottom: 20px;
+            color: #007bff;
+            text-align: center;
         }
-        ul {
-            list-style: none;
-            padding: 0;
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
         }
-        li {
-            margin-bottom: 10px;
+
+        select {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            margin-bottom: 20px;
             border: 1px solid #ddd;
             border-radius: 5px;
-            padding: 10px;
+            background-color: #fff;
+            transition: all 0.2s ease;
         }
+
+        select:hover, select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
+            outline: none;
+        }
+
         button {
-            margin-top: 10px;
-            padding: 5px;
-            background-color: #007bff;
-            color: white;
+            width: calc(50% - 10px);
+            padding: 10px 15px;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            transition: all 0.2s ease;
         }
+
+        button:first-of-type {
+            margin-right: 20px;
+        }
+
         button:hover {
+            transform: scale(1.05);
+        }
+
+        #apply-variable-to-family {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        #apply-variable-to-family:hover {
             background-color: #0056b3;
         }
-        select {
-            margin-top: 10px;
-            padding: 5px;
-            width: 100%;
+
+        #update-data {
+            background-color: #6c757d;
+            color: #fff;
+        }
+
+        #update-data:hover {
+            background-color: #5a6268;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        @media (max-width: 600px) {
+            button {
+                width: 100%;
+                margin: 10px 0;
+            }
         }
     </style>
 </head>
 <body>
-<h1>All Variables in Draft</h1>
-<ul id="variables-list"></ul>
+<div class="container">
+    <h1>Manage Font Variables</h1>
+    <label for="style-select">Select Font Family:</label>
+    <select id="style-select">
+        <option value="">Select a Font Family</option>
+    </select>
 
-<label for="style-select">Select Font Family:</label>
-<select id="style-select">
-    <option value="">Select a Font Family</option>
-</select>
+    <label for="variable-select">Select Variable:</label>
+    <select id="variable-select">
+        <option value="">Select a Variable</option>
+    </select>
 
-<label for="variable-select">Select Variable:</label>
-<select id="variable-select">
-    <option value="">Select a Variable</option>
-</select>
-
-<button id="apply-variable-to-family">Apply</button>
-<button id="update-data">Update</button>
+    <div class="button-container">
+        <button id="apply-variable-to-family">Apply Variable</button>
+        <button id="update-data">Update Data</button>
+    </div>
+</div>
 
 <script>
     const applyVariableToFamilyButton = document.getElementById('apply-variable-to-family');
     const updateDataButton = document.getElementById('update-data');
-    const variablesList = document.getElementById('variables-list');
     const styleSelect = document.getElementById('style-select');
     const variableSelect = document.getElementById('variable-select');
 
     let textStyles = [];
     let variables = [];
 
-    // Автоматический запрос переменных и текстовых стилей при загрузке
     window.onload = () => {
         updateData();
     };
@@ -113,3 +178,4 @@
     };
 </script>
 </body>
+</html>

@@ -39,9 +39,6 @@ async function getAllTextStyles() {
     return [];
   }
 
-  // Выводим данные о переменных для отладки
-  console.log("Fetched variables:", variables);
-
   const groupedStyles = localStyles.reduce((groups, style) => {
     const fontFamily = style.fontName.family;
     if (!groups[fontFamily]) {
@@ -97,4 +94,4 @@ figma.ui.onmessage = async (msg) => {
 };
 
 // Отображение UI
-figma.showUI(__html__, { width: 400, height: 400 });
+figma.showUI(__html__, { width: 400, height: 370 });
