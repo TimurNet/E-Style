@@ -47,7 +47,7 @@ E-Style — это плагин для Figma, который позволяет 
 - **HTML/CSS** — UI плагина.
 
 ## Лицензия
-Этот проект распространяется под лицензией GPL (GNU General Public License).
+Этот проект распространяется под лицензией AGPL-3.0 (GNU Affero General Public License).
 
 ## Автор
 Разработчик: Тимур Якшимбетов (@timur_etc)
