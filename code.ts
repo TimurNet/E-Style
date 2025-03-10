@@ -1,4 +1,20 @@
-figma.showUI(__html__, { width: 400, height: 300 });
+/**
+ * E-Style Plugin
+ * Copyright (C) 2024 [Ваше имя или название организации]
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
 
 // Функция для получения всех переменных в драфте и их отправки в UI
 async function getAllVariables() {
@@ -94,4 +110,4 @@ figma.ui.onmessage = async (msg) => {
 };
 
 // Отображение UI
-figma.showUI(__html__, { width: 400, height: 370 });
+figma.showUI(__html__, { width: 400, height: 352 });
