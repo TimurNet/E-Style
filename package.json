@@ -9,7 +9,7 @@
     "lint:fix": "eslint --ext .ts,.tsx --ignore-pattern node_modules --fix .",
     "watch": "npm run build -- --watch"
   },
-  "author": "Timur Yakshimbetov",
+  "author": "Timur Iakshimbetov",
   "license": "AGPL-3.0",
   "devDependencies": {
     "@figma/eslint-plugin-figma-plugins": "*",
