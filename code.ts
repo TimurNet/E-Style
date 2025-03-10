@@ -1,6 +1,6 @@
 /**
  * E-Style Plugin
- * Copyright (C) 2025 [Timur Iakshimbetov]
+ * Copyright (C) 2025 [Timur]
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published
@@ -15,6 +15,9 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
+
+// Отображение UI
+figma.showUI(__html__, { width: 400, height: 372 });
 
 // Функция для получения всех переменных в драфте и их отправки в UI
 async function getAllVariables() {
@@ -108,6 +111,3 @@ figma.ui.onmessage = async (msg) => {
     figma.ui.postMessage({ type: 'text-styles', data: textStyles });
   }
 };
-
-// Отображение UI
-figma.showUI(__html__, { width: 400, height: 352 });
