@@ -1,40 +1,53 @@
-Below are the steps to get your plugin running. You can also find instructions at:
+# E-Style
 
-  https://www.figma.com/plugin-docs/plugin-quickstart-guide/
+E-Style — это плагин для Figma, который позволяет управлять переменными шрифтов и текстовыми стилями. Он помогает пользователям легко применять переменные к семействам шрифтов и обновлять данные стилей.
 
-This plugin template uses Typescript and NPM, two standard tools in creating JavaScript applications.
+## Установка
 
-First, download Node.js which comes with NPM. This will allow you to install TypeScript and other
-libraries. You can find the download link here:
+Перед началом убедитесь, что у вас установлен **Node.js** (рекомендуется последняя LTS-версия). Если Node.js не установлен, скачайте его с [официального сайта](https://nodejs.org/).
 
-  https://nodejs.org/en/download/
+1. Склонируйте репозиторий или скачайте исходный код.
+2. Установите зависимости:
+   ```sh
+   npm install
+   ```
+3. Соберите проект:
+   ```sh
+   npm run build
+   ```
+4. В Figma откройте **Плагины → Разработка → Запустить локальный плагин…** и выберите `manifest.json`.
 
-Next, install TypeScript using the command:
+## Использование
 
-  npm install -g typescript
+### Интерфейс
+Плагин предоставляет удобный UI с возможностью выбора семейства шрифтов и переменных:
+- **Select Font Family** — выбор текстового стиля.
+- **Select Variable** — выбор переменной.
+- **Apply Variable** — применение переменной к выбранному стилю.
+- **Update Data** — обновление списка доступных текстовых стилей и переменных.
 
-Finally, in the directory of your plugin, get the latest type definitions for the plugin API by running:
+### Обмен данными с Figma
+Плагин отправляет сообщения в среду Figma:
+- `get-variables` — получает доступные переменные.
+- `get-text-styles` — получает список текстовых стилей.
+- `apply-variable-to-font-family` — применяет выбранную переменную к текстовому стилю.
 
-  npm install --save-dev @figma/plugin-typings
+## Разработка
 
-If you are familiar with JavaScript, TypeScript will look very familiar. In fact, valid JavaScript code
-is already valid Typescript code.
+### Скрипты
+- `npm run build` — сборка TypeScript-кода.
+- `npm run watch` — запуск сборки в режиме отслеживания изменений.
+- `npm run lint` — проверка кода на ошибки.
+- `npm run lint:fix` — исправление ошибок форматирования.
 
-TypeScript adds type annotations to variables. This allows code editors such as Visual Studio Code
-to provide information about the Figma API while you are writing code, as well as help catch bugs
-you previously didn't notice.
+### Технологии
+- **TypeScript** — основной язык проекта.
+- **ESLint** — линтер для проверки кода.
+- **Figma Plugin API** — взаимодействие с Figma.
+- **HTML/CSS** — UI плагина.
 
-For more information, visit https://www.typescriptlang.org/
+## Лицензия
+Этот проект распространяется под лицензией MIT.
 
-Using TypeScript requires a compiler to convert TypeScript (code.ts) into JavaScript (code.js)
-for the browser to run.
-
-We recommend writing TypeScript code using Visual Studio code:
-
-1. Download Visual Studio Code if you haven't already: https://code.visualstudio.com/.
-2. Open this directory in Visual Studio Code.
-3. Compile TypeScript to JavaScript: Run the "Terminal > Run Build Task..." menu item,
-    then select "npm: watch". You will have to do this again every time
-    you reopen Visual Studio Code.
-
-That's it! Visual Studio Code will regenerate the JavaScript file every time you save.
+## Автор
+Разработчик: [Ваше Имя]
